@@ -26,6 +26,7 @@ namespace Talabat.APIs.Controllers
             this.mapper = mapper;
         }
         //[Authorize]
+        [CachedAttribute(300)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Pagination<ProductToReturnDto>>>> GetAllProducts([FromQuery]ProductSpecParams specParams)
         {
@@ -40,12 +41,11 @@ namespace Talabat.APIs.Controllers
                 PageIndex= specParams.PageIndex,
                 Data = ProductMapped,
                 Count = count
-
             };
             
             return Ok(Pigination);
         }
-
+        [CachedAttribute(300)]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ProductToReturnDto), 200)]
         [ProducesResponseType(typeof(APIResponse),StatusCodes.Status404NotFound)]
@@ -57,14 +57,14 @@ namespace Talabat.APIs.Controllers
             var ProductMapped = mapper.Map<Product, ProductToReturnDto>(products);
             return Ok(ProductMapped);
         }
-
+        [CachedAttribute(300)]
         [HttpGet("Brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetAllBrands()
         {
             var Brand =await unitofwork.Repository<ProductBrand>().GatAllAsync();
             return Ok(Brand);
         }
-
+        [CachedAttribute(300)]
         [HttpGet("Types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetAllTypes()
         {

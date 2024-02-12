@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using Talabat.APIs.DTOS;
 using Talabat.APIs.Error;
+using Talabat.APIs.Helpers;
 using Talabat.Core.Entites;
 using Talabat.Core.Repositores;
 
@@ -20,6 +21,7 @@ namespace Talabat.APIs.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
+        [CachedAttribute(300)]
         public async Task<ActionResult<CustomarBasket>> GetCustomarBasket(string BasketId)
         {
             var Basket = await basketRepository.GetBasketAsynk(BasketId);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Talabat.APIs.DTOS;
 using Talabat.APIs.Error;
+using Talabat.APIs.Helpers;
 using Talabat.Core;
 using Talabat.Core.Entites.Order_Aggregate;
 using Talabat.Core.Services;
@@ -45,6 +46,7 @@ namespace Talabat.APIs.Controllers
         [ProducesResponseType(typeof(Order), StatusCodes.Status400BadRequest)]
         [HttpGet]
         [Authorize]
+        [CachedAttribute(300)]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrderForUser()
         {
             var BuyerEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -58,6 +60,7 @@ namespace Talabat.APIs.Controllers
         [ProducesResponseType(typeof(Order), StatusCodes.Status400BadRequest)]
         [HttpGet("{id}")]
         [Authorize]
+        [CachedAttribute(300)]
         public async Task<ActionResult<Order>>GetOrderByIdForSpecificUser(int id)
         {
             string BuyerEmail=User.FindFirstValue(ClaimTypes.Email);
@@ -69,6 +72,7 @@ namespace Talabat.APIs.Controllers
         [ProducesResponseType(typeof(DeliveryMethod), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(DeliveryMethod), StatusCodes.Status400BadRequest)]
         [HttpGet("deliveryMethods")]
+        [CachedAttribute(300)]
         public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDelivaryMethod()
         {
             var Delivarymethods =await unitofwork.Repository<DeliveryMethod>().GatAllAsync();
