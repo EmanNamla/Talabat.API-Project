@@ -29,7 +29,8 @@ namespace Talabat.APIs.MiddelWares
                 context.Response.ContentType= "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
              
-                var Response= env.IsDevelopment()? new ApiExptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString()): new ApiExptionResponse((int)HttpStatusCode.InternalServerError);
+                var Response= env.IsDevelopment()? new ApiExptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString()):
+                    new ApiExptionResponse((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString());
                 var options = new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase

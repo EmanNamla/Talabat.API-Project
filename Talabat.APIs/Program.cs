@@ -79,9 +79,10 @@ catch(Exception ex)
 
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddelWare>();
 if (app.Environment.IsDevelopment())
 {
-    app.UseMiddleware<ExceptionMiddelWare>();
+    
 
     app.UseSwaggerExtention();
 }
